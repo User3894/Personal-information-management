@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة المعلومات الشخصية</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- حاوية خلفية Three.js -->
+    <div id="three-canvas-container"></div>
+
+    <div class="container">
+        <header>
+            <h1><span class="icon">👤</span> نظام إدارة المعلومات الشخصية</h1>
+        </header>
+
+        <main>
+            <section class="form-section card">
+                <h2>إدخال / تحديث معلومات</h2>
+                <form id="info-form">
+                    <input type="hidden" id="entry-id"> <!-- لتتبع الإدخال عند التعديل -->
+
+                    <div class="form-group">
+                        <label for="name">الاسم الكامل:</label>
+                        <input type="text" id="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="age">العمر:</label>
+                        <input type="number" id="age" min="1" max="150">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gender">الجنس:</label>
+                        <select id="gender">
+                            <option value="">-- اختر --</option>
+                            <option value="ذكر">ذكر</option>
+                            <option value="أنثى">أنثى</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">السكن:</label>
+                        <input type="text" id="address">
+                    </div>
+
+                    <div class="form-group location-group">
+                        <label for="location">إحداثيات الموقع:</label>
+                        <input type="text" id="location" readonly placeholder="انقر للحصول على الموقع">
+                        <button type="button" id="getLocationBtn" title="الحصول على الموقع الحالي">📍</button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="photo">الصورة الشخصية:</label>
+                        <input type="file" id="photo" accept="image/*">
+                        <img id="image-preview" src="#" alt="معاينة الصورة" style="max-width: 100px; max-height: 100px; display: none; margin-top: 10px;">
+                    </div>
+
+                    <button type="submit" id="submitBtn" class="btn btn-primary">إضافة بيانات</button>
+                    <button type="button" id="clearFormBtn" class="btn btn-secondary">مسح النموذج</button>
+                </form>
+            </section>
+
+            <section class="data-section">
+                <div class="search-controls card">
+                    <h2>البحث في السجلات</h2>
+                    <div class="form-group">
+                        <label for="searchInput">بحث بالاسم:</label>
+                        <input type="search" id="searchInput" placeholder="اكتب الاسم هنا...">
+                    </div>
+                    <button id="deleteAllBtn" class="btn btn-danger">حذف جميع السجلات</button>
+                </div>
+
+                <h2>السجلات الحالية</h2>
+                <div id="entries-list" class="entries-grid">
+                    <!-- سيتم ملء البيانات هنا بواسطة JavaScript -->
+                    <p>لا توجد سجلات لعرضها حاليًا.</p>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>نظام تجريبي - تصميم مستوحى من أنظمة المعلومات</p>
+        </footer>
+    </div>
+
+    <!-- مكتبة Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- ملف JavaScript الخاص بالتطبيق -->
+    <script src="js/script.js"></script>
+</body>
+</html>
