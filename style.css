@@ -1,0 +1,331 @@
+/* --- المتغيرات العامة والأساسيات --- */
+:root {
+    --bg-color: #1a1a2e; /* أزرق ليلي داكن */
+    --card-bg-color: #16213e; /* أزرق أغمق قليلاً */
+    --primary-text-color: #e0fbfc; /* سيان فاتح جدًا */
+    --secondary-text-color: #9fb3c8; /* أزرق رمادي باهت */
+    --accent-color-1: #0f3460; /* أزرق داكن */
+    --accent-color-2: #53bf9d; /* أخضر مائي */
+    --accent-color-3: #f6f6f6; /* أبيض تقريبًا */
+    --danger-color: #e94560; /* أحمر */
+    --border-color: #0f3460; /* نفس الأزرق الداكن */
+
+    --font-family: 'Almarai', sans-serif;
+    --border-radius: 5px;
+    --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    --input-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-color);
+    color: var(--primary-text-color);
+    line-height: 1.6;
+    overflow-x: hidden; /* لمنع شريط التمرير الأفقي الناتج عن الخلفية */
+    position: relative; /* للسماح بتحديد موضع مطلق للخلفية */
+    min-height: 100vh;
+}
+
+/* حاوية خلفية Three.js */
+#three-canvas-container {
+    position: fixed; /* أو absolute إذا كان body هو المرجع */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* خلف كل شيء */
+    opacity: 0.4; /* جعلها باهتة قليلاً */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1rem;
+    position: relative; /* للتأكد من أنها فوق الخلفية */
+    z-index: 1;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--accent-color-2);
+    text-shadow: 0 0 5px var(--accent-color-2);
+}
+
+header h1 .icon {
+    display: inline-block;
+    margin-left: 10px; /* تغيير إلى margin-left بسبب dir="rtl" */
+    filter: drop-shadow(0 0 3px var(--accent-color-2));
+}
+
+main {
+    display: grid;
+    grid-template-columns: 1fr; /* عمود واحد افتراضيًا */
+    gap: 2rem;
+}
+
+/* نمط البطاقة العام */
+.card {
+    background-color: var(--card-bg-color);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
+}
+
+/* --- قسم النموذج --- */
+.form-section h2, .data-section h2 {
+    margin-bottom: 1.5rem;
+    color: var(--accent-color-2);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--secondary-text-color);
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="search"],
+.form-group select,
+.form-group input[type="file"] {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    color: var(--primary-text-color);
+    font-family: inherit;
+    font-size: 1rem;
+    box-shadow: var(--input-shadow);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--accent-color-2);
+    box-shadow: 0 0 8px rgba(83, 191, 157, 0.5), var(--input-shadow);
+}
+
+.form-group input[type="file"] {
+    padding: 0.5rem; /* تعديل padding للملفات */
+}
+
+.form-group input::placeholder {
+    color: var(--secondary-text-color);
+    opacity: 0.7;
+}
+
+/* تنسيق خاص لحقل الموقع والزر */
+.location-group {
+    position: relative;
+}
+
+.location-group input[readonly] {
+    padding-left: 3rem; /* مساحة للزر */
+    cursor: default;
+    background-color: #2a2a4e; /* لون أغمق للإشارة للقراءة فقط */
+}
+
+.location-group button {
+    position: absolute;
+    left: 5px; /* تغيير إلى left بسبب dir="rtl" */
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--accent-color-2);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0 5px;
+}
+
+#image-preview {
+    border: 1px dashed var(--border-color);
+    object-fit: cover;
+    border-radius: var(--border-radius);
+}
+
+/* --- الأزرار --- */
+.btn {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    margin-right: 0.5rem; /* تغيير إلى margin-right بسبب dir="rtl" */
+    margin-top: 0.5rem;
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn-primary {
+    background-color: var(--accent-color-2);
+    color: var(--bg-color);
+}
+
+.btn-primary:hover {
+    background-color: #48a88a;
+}
+
+.btn-secondary {
+    background-color: var(--secondary-text-color);
+    color: var(--bg-color);
+}
+
+.btn-secondary:hover {
+    background-color: #8a9fb1;
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    color: var(--accent-color-3);
+}
+
+.btn-danger:hover {
+    background-color: #d43a51;
+}
+
+.btn-edit {
+    background-color: #3a7ca5; /* أزرق للتعديل */
+    color: var(--accent-color-3);
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+}
+.btn-edit:hover {
+    background-color: #2f6484;
+}
+
+.btn-delete {
+    background-color: #a53a4b; /* أحمر داكن للحذف */
+    color: var(--accent-color-3);
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+}
+.btn-delete:hover {
+    background-color: #842f3c;
+}
+
+/* --- قسم عرض البيانات --- */
+.search-controls {
+    margin-bottom: 2rem;
+}
+
+.entries-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.entry-item {
+    background-color: var(--card-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.entry-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.entry-item img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border: 3px solid var(--accent-color-2);
+    background-color: var(--bg-color); /* لون خلفية إذا لم تحمل الصورة */
+}
+
+.entry-info h3 {
+    color: var(--accent-color-3);
+    margin-bottom: 0.5rem;
+}
+
+.entry-info p {
+    font-size: 0.9rem;
+    color: var(--secondary-text-color);
+    margin-bottom: 0.3rem;
+    word-break: break-word; /* لمنع تجاوز النص الطويل */
+}
+
+.entry-actions {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* --- التذييل --- */
+footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    color: var(--secondary-text-color);
+    font-size: 0.9rem;
+}
+
+/* --- الاستجابة للشاشات --- */
+@media (min-width: 992px) {
+    main {
+        grid-template-columns: 400px 1fr; /* عمود للنموذج وعمود للبيانات */
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin: 1rem auto;
+        padding: 0.5rem;
+    }
+    .entries-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+    .btn {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 14px;
+    }
+    .entries-grid {
+        grid-template-columns: 1fr; /* عمود واحد في الشاشات الصغيرة جدا */
+    }
+    .form-section, .data-section {
+        padding: 1rem;
+    }
+  }
